@@ -1,10 +1,10 @@
 <?php
-declare(strict_types= 1);
+declare(strict_types=1);
+
 session_start();
 
 require_once("classes/database.php");
 require_once("classes/patient.php");
-
 
 $database = new Database();
 
@@ -14,18 +14,16 @@ $patient = new Patient($conn);
 
 $message = "";
 
-if($_SERVER["REQUEST_METHOD"] === "POST"){
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST["email"]);
     $password = $_POST["password"];
 
-    if ($email === "" || $password === ""){
+    if ($email === "" || $password === "") {
         $message = "Email and Password are required";
+    } else {
+        $loggedpatient = $patient->login($email, $password);
 
-    }
-    else {
-        $loggedpatient = $patient->login($email,$password);
-
-        if($loggedpatient){
+        if ($loggedpatient) {
             $_SESSION["patient_id"] = $loggedpatient["patient_id"];
             $_SESSION["patient_name"] = $loggedpatient["first_name"];
 
@@ -34,14 +32,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         } else {
             $message = "Invalid Email or Password";
         }
-
     }
-
 }
 ?>
+
 <?php if ($message !== ""): ?>
     <p><?= $message ?></p>
 <?php endif; ?>
+
 <form method="POST" action="">
     <label>Email</label>
     <input type="email" name="email" required>
@@ -51,3 +49,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <button type="submit">Login</button>
 </form>
+
+<p>
+    Don't have an account?
+    <a href="register.php">Register</a>
+</p>

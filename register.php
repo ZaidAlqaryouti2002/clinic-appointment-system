@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 require_once "classes/database.php";
 require_once "classes/patient.php";
 
@@ -31,18 +32,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $message = "Invalid email format";
     }
-    else{
-        if ($patient->register($fname, $lname, $email, $password, $phone)){
-            $message = "Registration successfull";
+    else {
+        if ($patient->register($fname, $lname, $email, $password, $phone)) {
+            $message = "Registration successful";
         } else {
             $message = "Registration failed";
         }
     }
 }
 ?>
+
 <?php if ($message !== "") : ?>
     <p><?= $message ?></p>
 <?php endif; ?>
+
 <form method="POST" action="">
     <label>First Name</label>
     <input type="text" name="first_name">
@@ -61,3 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <button type="submit">Register</button>
 </form>
+
+<p>
+    Already have an account?
+    <a href="login.php">Login</a>
+</p>
