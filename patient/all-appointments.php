@@ -35,8 +35,8 @@ $appointments = $appointment->getPatientAppointments($patientId);
     <h1>My Appointments</h1>
 
     <nav>
-        <a href="home.php">Home</a>
-        <a href="doctors.php">Doctors</a>
+        <a href="homepage.php">Home</a>
+        <a href="patients-doctors.php">Doctors</a>
         <a href="all-appointments.php">My Appointments</a>
         <a href="profile.php">Profile</a>
         <a href="../logout.php">Logout</a>

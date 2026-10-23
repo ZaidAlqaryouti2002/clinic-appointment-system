@@ -46,6 +46,17 @@
         $stmt->execute([$patientID]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getAllPatients()
+{
+    $query = "SELECT patient_id, first_name, last_name, email, phone, created_at
+              FROM patients";
+
+    $stmt = $this->db->prepare($query);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
  }
 
  ?>

@@ -16,7 +16,7 @@ $conn = $database->getConnection();
 
 $doctor = new Doctor($conn);
 $doctors = $doctor->getAllDoctors();
-?>\
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,9 +30,9 @@ $doctors = $doctor->getAllDoctors();
     <h1>Doctors</h1>
 
     <nav>
-        <a href="home.php">Home</a>
-        <a href="doctors.php">Doctors</a>
-        <a href="appointments.php">My Appointments</a>
+        <a href="homepage.php">Home</a>
+        <a href="patients-doctors.php">Doctors</a>
+        <a href="all-appointments.php">My Appointments</a>
         <a href="profile.php">Profile</a>
         <a href="../logout.php">Logout</a>
     </nav>
@@ -40,10 +40,12 @@ $doctors = $doctor->getAllDoctors();
 <?php foreach ($doctors as $doctor): ?>
 
      <div>
-        <img src="../uploads/doctors/<?= htmlspecialchars($doctor["image"]) ?>" 
-             alt="Doctor Image"
-             width="150"
-        >
+        <?php if (!empty($doctor["image"])): ?>
+            <img src="../uploads/doctors/<?= htmlspecialchars($doctor["image"]) ?>"
+                 alt="Doctor Image"
+                 width="150"
+            >
+        <?php endif; ?>
         
         <h3>
             Dr. <?= htmlspecialchars($doctor["first_name"]) ?>
@@ -62,7 +64,7 @@ $doctors = $doctor->getAllDoctors();
             <?= htmlspecialchars($doctor["phone"]) ?>
         </p>
 
-        <a href="book-appointment.php?doctor_id=<?= $doctor["doctor_id"] ?>">
+        <a href="book-appointments.php?doctor_id=<?= $doctor["doctor_id"] ?>">
             Book Appointment
         </a>
      </div>

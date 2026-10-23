@@ -22,7 +22,7 @@ $message = "";
 $doctorId = $_GET["doctor_id"] ?? "";
 
 if ($doctorId === "") {
-    header("Location: doctors.php");
+    header("Location: patients-doctors.php");
     exit;
 }
 
