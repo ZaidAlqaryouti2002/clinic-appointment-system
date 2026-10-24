@@ -28,7 +28,6 @@ $patientName = $_SESSION["patient_name"];
         <a href="homepage.php">Home</a>
         <a href="patients-doctors.php">Doctors</a>
         <a href="all-appointments.php">My Appointments</a>
-        <a href="profile.php">Profile</a>
         <a href="../logout.php">Logout</a>
     </nav>
 
