@@ -46,27 +46,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Admin login | MedCare</title>
+    <link rel="stylesheet" href="../styling/style.css">
 </head>
-<body>
-
-    <h1>Admin Login</h1>
-
-    <?php if ($message !== ""): ?>
-        <p><?= htmlspecialchars($message) ?></p>
+<body class="auth-page page-login">
+<?php $pageArea = "auth"; $basePath = "../"; ?>
+<?php require "../components/header.php"; ?>
+<main class="container auth-content">
+<section class="auth-panel" aria-labelledby="auth-heading">
+    <p class="eyebrow">Administrator access</p>
+    <h1 id="auth-heading">Admin login</h1>
+    <p class="page-description">Sign in to manage MedCare clinic records and appointments.</p>
+<?php if ($message !== ""): ?>
+        <p class="alert" role="alert" data-message="<?= htmlspecialchars($message) ?>"><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
-    <form method="POST" action="">
+    <form class="auth-form" method="POST" action="">
 
-        <label>Email</label>
-        <input type="email" name="email" required>
+        <div class="form-field">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+</div>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+        <div class="form-field">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+</div>
 
-        <button type="submit">Login</button>
+        <button type="submit">Sign in</button>
 
     </form>
 
+<p class="form-note">Patient access? <a href="../login.php">Patient Login</a></p>
+</section>
+</main>
+<?php require "../components/footer.php"; ?>
 </body>
 </html>

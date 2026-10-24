@@ -28,34 +28,33 @@ $appointments = $appointment->getPatientAppointments($patientId);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Appointments</title>
+    <title>My Appointments | MedCare</title>
+    <link rel="stylesheet" href="../styling/style.css">
 </head>
-<body>
+<body class="patient-page page-appointments">
+<?php $pageArea = "patient"; $basePath = "../"; ?>
+<?php require "../components/header.php"; ?>
+<main class="container">
+<div class="page-heading"><h1>My Appointments</h1><p>Review your appointment details and current status.</p></div>
 
-    <h1>My Appointments</h1>
-
-    <nav>
-        <a href="homepage.php">Home</a>
-        <a href="patients-doctors.php">Doctors</a>
-        <a href="all-appointments.php">My Appointments</a>
-        <a href="../logout.php">Logout</a>
-    </nav>
+    
 
     <?php if (empty($appointments)): ?>
 
-        <p>No appointments found.</p>
+        <p class="empty-state">No appointments found.</p>
 
     <?php else: ?>
 
-        <table border="1">
+        <div class="table-scroll" role="region" aria-label="My Appointments" tabindex="0">
+<table>
             <thead>
                 <tr>
-                    <th>Doctor</th>
-                    <th>Specialization</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Reason</th>
-                    <th>Status</th>
+                    <th scope="col">Doctor</th>
+                    <th scope="col">Specialization</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
 
@@ -87,7 +86,7 @@ $appointments = $appointment->getPatientAppointments($patientId);
                         </td>
 
                         <td>
-                            <?= htmlspecialchars($appointment["status"]) ?>
+                            <span class="status" data-status="<?= htmlspecialchars($appointment["status"]) ?>"><?= htmlspecialchars($appointment["status"]) ?></span>
                         </td>
                     </tr>
 
@@ -95,8 +94,10 @@ $appointments = $appointment->getPatientAppointments($patientId);
 
             </tbody>
         </table>
+</div>
 
     <?php endif; ?>
-
+</main>
+<?php require "../components/footer.php"; ?>
 </body>
 </html>

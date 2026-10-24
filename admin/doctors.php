@@ -156,102 +156,130 @@ $doctors = $doctorModel->getAllDoctors();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Doctors</title>
+    <title>Manage Doctors | MedCare</title>
+    <link rel="stylesheet" href="../styling/style.css">
 </head>
-<body>
+<body class="admin-page page-doctors">
+<div class="admin-layout">
+    <?php require "../components/navbar.php"; ?>
+    <div class="admin-content">
+        <?php $pageArea = "admin"; $basePath = "../"; ?>
+        <?php require "../components/header.php"; ?>
+        <main class="dashboard-content">
+<div class="page-heading"><h1>Manage Doctors</h1><p>Add, update, and manage your clinic’s doctor records.</p></div>
 
-    <h1>Manage Doctors</h1>
-
-    <nav>
-        <a href="dashboard.php">Dashboard</a>
-        <a href="doctors.php">Doctors</a>
-        <a href="patients.php">Patients</a>
-        <a href="appointments.php">Appointments</a>
-        <a href="../logout.php">Logout</a>
-    </nav>
+    
 
     <?php if ($message !== ""): ?>
-        <p><?= htmlspecialchars($message) ?></p>
+        <p class="alert" role="alert" data-message="<?= htmlspecialchars($message) ?>"><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
+    <section class="form-section">
     <?php if ($editDoctor): ?>
 
         <h2>Edit Doctor</h2>
 
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form class="doctor-form" method="POST" action="" enctype="multipart/form-data">
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="doctor_id" value="<?= $editDoctor["doctor_id"] ?>">
 
-            <label>First Name</label>
-            <input type="text" name="first_name" value="<?= htmlspecialchars($editDoctor["first_name"]) ?>" required>
+            <div class="form-field">
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars($editDoctor["first_name"]) ?>" required>
+</div>
 
-            <label>Last Name</label>
-            <input type="text" name="last_name" value="<?= htmlspecialchars($editDoctor["last_name"]) ?>" required>
+            <div class="form-field">
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars($editDoctor["last_name"]) ?>" required>
+</div>
 
-            <label>Specialization</label>
-            <input type="text" name="specialization" value="<?= htmlspecialchars($editDoctor["specialization"]) ?>" required>
+            <div class="form-field">
+    <label for="specialization">Specialization</label>
+    <input type="text" id="specialization" name="specialization" value="<?= htmlspecialchars($editDoctor["specialization"]) ?>" required>
+</div>
 
-            <label>Phone</label>
-            <input type="text" name="phone" value="<?= htmlspecialchars($editDoctor["phone"]) ?>" required>
+            <div class="form-field">
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" value="<?= htmlspecialchars($editDoctor["phone"]) ?>" required>
+</div>
 
-            <label>Email</label>
-            <input type="email" name="email" value="<?= htmlspecialchars($editDoctor["email"]) ?>" required>
+            <div class="form-field">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="<?= htmlspecialchars($editDoctor["email"]) ?>" required>
+</div>
 
-            <label>Image</label>
-            <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
+            <div class="form-field">
+    <label for="image">Image</label>
+    <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png,.webp">
+</div>
 
-            <button type="submit">Update Doctor</button>
-            <a href="doctors.php">Cancel</a>
+            <div class="form-actions"><button type="submit">Update Doctor</button>
+            <a class="button button-secondary" href="doctors.php">Cancel</a></div>
         </form>
 
     <?php else: ?>
 
         <h2>Add Doctor</h2>
 
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form class="doctor-form" method="POST" action="" enctype="multipart/form-data">
             <input type="hidden" name="action" value="add">
 
-            <label>First Name</label>
-            <input type="text" name="first_name" required>
+            <div class="form-field">
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name" required>
+</div>
 
-            <label>Last Name</label>
-            <input type="text" name="last_name" required>
+            <div class="form-field">
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name" required>
+</div>
 
-            <label>Specialization</label>
-            <input type="text" name="specialization" required>
+            <div class="form-field">
+    <label for="specialization">Specialization</label>
+    <input type="text" id="specialization" name="specialization" required>
+</div>
 
-            <label>Phone</label>
-            <input type="text" name="phone" required>
+            <div class="form-field">
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" required>
+</div>
 
-            <label>Email</label>
-            <input type="email" name="email" required>
+            <div class="form-field">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+</div>
 
-            <label>Image</label>
-            <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
+            <div class="form-field">
+    <label for="image">Image</label>
+    <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png,.webp">
+</div>
 
-            <button type="submit">Add Doctor</button>
+            <div class="form-actions"><button type="submit">Add Doctor</button></div>
         </form>
 
     <?php endif; ?>
 
+    </section>
+    <section class="records-section">
     <h2>Doctors</h2>
 
     <?php if (empty($doctors)): ?>
 
-        <p>No doctors found.</p>
+        <p class="empty-state">No doctors found.</p>
 
     <?php else: ?>
 
-        <table border="1">
+        <div class="table-scroll" role="region" aria-label="Manage Doctors" tabindex="0">
+<table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Specialization</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Actions</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Specialization</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
 
@@ -280,15 +308,22 @@ $doctors = $doctorModel->getAllDoctors();
                         <td><?= htmlspecialchars($doctor["email"]) ?></td>
 
                         <td>
-                            <a href="doctors.php?edit=<?= $doctor["doctor_id"] ?>">Edit</a>
-                            <a href="doctors.php?delete=<?= $doctor["doctor_id"] ?>">Delete</a>
+                            <a class="table-action" href="doctors.php?edit=<?= $doctor["doctor_id"] ?>">Edit</a>
+                            <a class="table-action action-danger" href="doctors.php?delete=<?= $doctor["doctor_id"] ?>">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+</div>
 
     <?php endif; ?>
 
+
+</section>
+        </main>
+        <?php require "../components/footer.php"; ?>
+    </div>
+</div>
 </body>
 </html>

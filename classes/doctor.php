@@ -76,6 +76,17 @@ class Doctor
 
         return $stmt->execute([$doctorId]);
     }
+    public function getDoctorsCount()
+   {
+    $query = "SELECT COUNT(*) AS total FROM doctors";
+
+    $stmt = $this->db->prepare($query);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result["total"];
+   }
 }
 
 ?>

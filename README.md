@@ -1,1 +1,3 @@
-# clinic-appointment-system
+# MedCare
+
+Clinic Appointment System.

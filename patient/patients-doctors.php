@@ -23,51 +23,64 @@ $doctors = $doctor->getAllDoctors();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctors</title>
+    <title>Doctors | MedCare</title>
+    <link rel="stylesheet" href="../styling/style.css">
 </head>
-<body>
+<body class="patient-page page-doctors">
+<?php $pageArea = "patient"; $basePath = "../"; ?>
+<?php require "../components/header.php"; ?>
+<main class="container">
+<div class="page-heading"><h1>Doctors</h1><p>Find a doctor and book your next clinic appointment.</p></div>
 
-    <h1>Doctors</h1>
+    
 
-    <nav>
-        <a href="homepage.php">Home</a>
-        <a href="patients-doctors.php">Doctors</a>
-        <a href="all-appointments.php">My Appointments</a>
-        <a href="../logout.php">Logout</a>
-    </nav>
-
+<div class="doctor-grid">
 <?php foreach ($doctors as $doctor): ?>
 
-     <div>
+     <article class="doctor-card">
+        <div class="doctor-card-heading">
+        <div class="doctor-photo">
         <?php if (!empty($doctor["image"])): ?>
             <img src="../uploads/doctors/<?= htmlspecialchars($doctor["image"]) ?>"
                  alt="Doctor Image"
                  width="150"
             >
+        <?php else: ?>
+            <span class="photo-placeholder">No photo</span>
         <?php endif; ?>
-        
+        </div>
+        <div class="doctor-introduction">
         <h3>
             Dr. <?= htmlspecialchars($doctor["first_name"]) ?>
             <?= htmlspecialchars($doctor["last_name"]) ?>
         </h3>
 
-        <p>
+        <p class="specialization">
             <?= htmlspecialchars($doctor["specialization"]) ?>
         </p>
+        </div>
+        </div>
 
-        <p>
+        <p class="doctor-contact"><span class="detail-label">Email</span>
             <?= htmlspecialchars($doctor["email"]) ?>
         </p>
 
-        <p>
+        <p class="doctor-contact"><span class="detail-label">Phone</span>
             <?= htmlspecialchars($doctor["phone"]) ?>
         </p>
 
-        <a href="book-appointments.php?doctor_id=<?= $doctor["doctor_id"] ?>">
+        <a class="button" href="book-appointments.php?doctor_id=<?= $doctor["doctor_id"] ?>">
             Book Appointment
         </a>
-     </div>
+     </article>
 <?php endforeach; ?>
+</div>
 
+
+<?php if (empty($doctors)): ?>
+    <p class="empty-state">No doctors found.</p>
+<?php endif; ?>
+</main>
+<?php require "../components/footer.php"; ?>
 </body>
 </html>

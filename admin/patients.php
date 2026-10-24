@@ -26,34 +26,35 @@ $patients = $patientModel->getAllPatients();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patients</title>
+    <title>Patients | MedCare</title>
+    <link rel="stylesheet" href="../styling/style.css">
 </head>
-<body>
+<body class="admin-page page-patients">
+<div class="admin-layout">
+    <?php require "../components/navbar.php"; ?>
+    <div class="admin-content">
+        <?php $pageArea = "admin"; $basePath = "../"; ?>
+        <?php require "../components/header.php"; ?>
+        <main class="dashboard-content">
+<div class="page-heading"><h1>Patients</h1><p>Patient contact details and registration records.</p></div>
 
-    <h1>Patients</h1>
-
-    <nav>
-        <a href="dashboard.php">Dashboard</a>
-        <a href="doctors.php">Doctors</a>
-        <a href="patients.php">Patients</a>
-        <a href="appointments.php">Appointments</a>
-        <a href="../logout.php">Logout</a>
-    </nav>
+    
 
     <?php if (empty($patients)): ?>
 
-        <p>No patients found.</p>
+        <p class="empty-state">No patients found.</p>
 
     <?php else: ?>
 
-        <table border="1">
+        <div class="table-scroll" role="region" aria-label="Patients" tabindex="0">
+<table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Registered At</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Registered At</th>
                 </tr>
             </thead>
 
@@ -80,8 +81,12 @@ $patients = $patientModel->getAllPatients();
 
             </tbody>
         </table>
+</div>
 
     <?php endif; ?>
-
+        </main>
+        <?php require "../components/footer.php"; ?>
+    </div>
+</div>
 </body>
 </html>

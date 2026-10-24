@@ -65,30 +65,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Appointment</title>
+    <title>Book Appointment | MedCare</title>
+    <link rel="stylesheet" href="../styling/style.css">
 </head>
-<body>
-
-    <h1>Book Appointment</h1>
+<body class="patient-page page-booking">
+<?php $pageArea = "patient"; $basePath = "../"; ?>
+<?php require "../components/header.php"; ?>
+<main class="container">
+<div class="page-heading"><h1>Book Appointment</h1><p>Choose a date and time, and tell us the reason for your visit.</p></div>
 
     <?php if ($message !== ""): ?>
-        <p><?= htmlspecialchars($message) ?></p>
+        <p class="alert" role="alert" data-message="<?= htmlspecialchars($message) ?>"><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
-    <form method="POST" action="">
+    <form class="booking-form form-panel" method="POST" action="">
 
-        <label>Appointment Date</label>
-        <input type="date" name="appointment_date" required>
+        <div class="form-field">
+    <label for="appointment_date">Appointment Date</label>
+    <input type="date" id="appointment_date" name="appointment_date" required>
+</div>
 
-        <label>Appointment Time</label>
-        <input type="time" name="appointment_time" required>
+        <div class="form-field">
+    <label for="appointment_time">Appointment Time</label>
+    <input type="time" id="appointment_time" name="appointment_time" required>
+</div>
 
-        <label>Reason</label>
-        <textarea name="reason" required></textarea>
+        <div class="form-field">
+    <label for="reason">Reason</label>
+    <textarea id="reason" name="reason" required></textarea>
+</div>
 
-        <button type="submit">Book Appointment</button>
+        <div class="form-actions"><button type="submit">Book Appointment</button><a class="button button-secondary" href="patients-doctors.php">Back to doctors</a></div>
 
     </form>
-
+</main>
+<?php require "../components/footer.php"; ?>
 </body>
 </html>

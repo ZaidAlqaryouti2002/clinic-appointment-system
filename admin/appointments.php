@@ -44,41 +44,42 @@ $appointments = $appointmentModel->getAllAppointments();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Appointments</title>
+    <title>Manage Appointments | MedCare</title>
+    <link rel="stylesheet" href="../styling/style.css">
 </head>
-<body>
+<body class="admin-page page-appointments">
+<div class="admin-layout">
+    <?php require "../components/navbar.php"; ?>
+    <div class="admin-content">
+        <?php $pageArea = "admin"; $basePath = "../"; ?>
+        <?php require "../components/header.php"; ?>
+        <main class="dashboard-content">
+<div class="page-heading"><h1>Manage Appointments</h1><p>Review clinic appointments and update their status.</p></div>
 
-    <h1>Manage Appointments</h1>
-
-    <nav>
-        <a href="dashboard.php">Dashboard</a>
-        <a href="doctors.php">Doctors</a>
-        <a href="patients.php">Patients</a>
-        <a href="appointments.php">Appointments</a>
-        <a href="../logout.php">Logout</a>
-    </nav>
+    
 
     <?php if ($message !== ""): ?>
-        <p><?= htmlspecialchars($message) ?></p>
+        <p class="alert" role="alert" data-message="<?= htmlspecialchars($message) ?>"><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
     <?php if (empty($appointments)): ?>
 
-        <p>No appointments found.</p>
+        <p class="empty-state">No appointments found.</p>
 
     <?php else: ?>
 
-        <table border="1">
+        <div class="table-scroll" role="region" aria-label="Manage Appointments" tabindex="0">
+<table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Patient</th>
-                    <th>Doctor</th>
-                    <th>Specialization</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Reason</th>
-                    <th>Status</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Patient</th>
+                    <th scope="col">Doctor</th>
+                    <th scope="col">Specialization</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
 
@@ -104,10 +105,11 @@ $appointments = $appointmentModel->getAllAppointments();
                         <td><?= htmlspecialchars($appointment["reason"]) ?></td>
 
                         <td>
-                            <form method="POST" action="">
+                            <span class="status" data-status="<?= htmlspecialchars($appointment["status"]) ?>"><?= htmlspecialchars($appointment["status"]) ?></span>
+                            <form class="status-form" method="POST" action="">
                                 <input type="hidden" name="appointment_id" value="<?= $appointment["appointment_id"] ?>">
 
-                                <select name="status">
+                                <select name="status" aria-label="Appointment status">
                                     <?php foreach ($allowedStatuses as $status): ?>
                                         <option
                                             value="<?= htmlspecialchars($status) ?>"
@@ -125,8 +127,12 @@ $appointments = $appointmentModel->getAllAppointments();
                 <?php endforeach; ?>
             </tbody>
         </table>
+</div>
 
     <?php endif; ?>
-
+        </main>
+        <?php require "../components/footer.php"; ?>
+    </div>
+</div>
 </body>
 </html>
