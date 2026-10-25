@@ -200,7 +200,8 @@ main.container {
 .page-home .patient-nav a[href="homepage.php"],
 .patient-page.page-doctors .patient-nav a[href="patients-doctors.php"],
 .page-booking .patient-nav a[href="patients-doctors.php"],
-.patient-page.page-appointments .patient-nav a[href="all-appointments.php"] {
+.patient-page.page-appointments .patient-nav a[href="all-appointments.php"],
+.page-profile .patient-nav a[href="profile.php"] {
     background: var(--blue-light);
     color: var(--blue-dark);
 }
@@ -563,7 +564,8 @@ input[type="file"]::file-selector-button {
 }
 
 .doctor-form,
-.booking-form {
+.booking-form,
+.profile-form {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--space-6);
@@ -1391,6 +1393,7 @@ td img {
 
     .doctor-form,
     .booking-form,
+    .profile-form,
     .doctor-grid,
     .steps-grid {
         grid-template-columns: 1fr;

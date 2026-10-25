@@ -19,6 +19,7 @@ This project was built as part of my PHP and MySQL training at Orange Coding Aca
 - View all personal appointments
 - Track appointment status: Pending, Confirmed, Completed, or Cancelled
 - View dashboard statistics and the next upcoming appointment
+- View and update patient profile information
 
 ### Admin
 
@@ -62,8 +63,7 @@ clinic-appointment-system/
 │   ├── appointment.php
 │   ├── database.php
 │   ├── doctor.php
-│   ├── patient.php
-│   └── user.php
+│   └── patient.php
 │
 ├── components/
 │   ├── footer.php
@@ -74,7 +74,10 @@ clinic-appointment-system/
 │   ├── all-appointments.php
 │   ├── book-appointments.php
 │   ├── homepage.php
-│   └── patients-doctors.php
+│   ├── login.php
+│   ├── patients-doctors.php
+│   ├── profile.php
+│   └── register.php
 │
 ├── styling/
 │   ├── clinic-doctor.jpg
@@ -85,9 +88,7 @@ clinic-appointment-system/
 │
 ├── Database Schema.pdf
 ├── index.php
-├── login.php
 ├── logout.php
-├── register.php
 └── README.md
 ```
 
@@ -265,7 +266,7 @@ http://localhost/clinic-appointment-system/
 Patient login:
 
 ```text
-http://localhost/clinic-appointment-system/login.php
+http://localhost/clinic-appointment-system/patient/login.php
 ```
 
 Admin login:

@@ -12,7 +12,7 @@ session_destroy();
 if ($isAdmin) {
     header("Location: admin/login.php");
 } else {
-    header("Location: login.php");
+    header("Location: patient/login.php");
 }
 
 exit;

@@ -20,8 +20,8 @@ declare(strict_types=1);
         <h1>Your next appointment,<br>made simple.</h1>
         <p class="hero-description">Find a doctor, book a visit, and keep track of your appointments. MedCare brings it all together in one clear, convenient place.</p>
         <div class="button-row">
-            <a class="button" href="register.php">Create Account</a>
-            <a class="button button-secondary" href="login.php">Patient Login</a>
+            <a class="button" href="patient/register.php">Create Account</a>
+            <a class="button button-secondary" href="patient/login.php">Patient Login</a>
         </div>
         <p class="hero-note">Already registered? Sign in to manage your appointments.</p>
     </div>

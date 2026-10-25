@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     </form>
 
-<p class="form-note">Patient access? <a href="../login.php">Patient Login</a></p>
+<p class="form-note">Patient access? <a href="../patient/login.php">Patient Login</a></p>
 </section>
 </main>
 <?php require "../components/footer.php"; ?>

@@ -47,6 +47,17 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function updateProfile($patientId, $fname, $lname, $email, $phone)
+    {
+        $query = "UPDATE patients
+                  SET first_name = ?, last_name = ?, email = ?, phone = ?
+                  WHERE patient_id = ?";
+
+        $stmt = $this->db->prepare($query);
+
+        return $stmt->execute([$fname, $lname, $email, $phone, $patientId]);
+    }
+
     public function getAllPatients()
 {
     $query = "SELECT patient_id, first_name, last_name, email, phone, created_at

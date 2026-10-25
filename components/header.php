@@ -25,13 +25,14 @@
                 <a href="homepage.php">Home</a>
                 <a href="patients-doctors.php">Doctors</a>
                 <a href="all-appointments.php">My Appointments</a>
+                <a href="profile.php">Profile</a>
                 <a class="logout-link" href="../logout.php">Logout</a>
             </nav>
         <?php elseif ($pageArea === "public"): ?>
             <nav class="public-nav" aria-label="Main navigation">
                 <a class="admin-access" href="admin/login.php">Admin Login</a>
-                <a href="login.php">Patient Login</a>
-                <a class="button button-small" href="register.php">Create Account</a>
+                <a href="patient/login.php">Patient Login</a>
+                <a class="button button-small" href="patient/register.php">Create Account</a>
             </nav>
         <?php else: ?>
             <a class="back-link" href="<?= $basePath ?>index.php">Back to clinic home</a>
