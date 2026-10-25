@@ -12,47 +12,66 @@ if (!isset($_SESSION["admin_id"])) {
 require_once "../classes/database.php";
 require_once "../classes/doctor.php";
 
+
 $database = new Database();
 $conn = $database->getConnection();
 
 $doctorModel = new Doctor($conn);
 
+
 $message = "";
 $editDoctor = false;
 
+
+
+// Delete Doctor
+
+
 if (isset($_GET["delete"])) {
+
     $doctorId = (int) $_GET["delete"];
+
     $doctorToDelete = $doctorModel->getDoctorById($doctorId);
 
     if ($doctorToDelete) {
-        try {
-            if ($doctorModel->deleteDoctor($doctorId)) {
-                if ($doctorToDelete["image"] !== "") {
-                    $imagePath = "../uploads/doctors/" . $doctorToDelete["image"];
 
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
-                    }
-                }
+        try {
+
+            if ($doctorModel->deleteDoctor($doctorId)) {
+
+                $doctorModel->deleteImage($doctorToDelete["image"]);
 
                 $message = "Doctor deleted successfully";
+
             } else {
+
                 $message = "Failed to delete doctor";
             }
+
         } catch (PDOException $e) {
+
             $message = "Doctor cannot be deleted because they have appointments";
         }
     }
 }
 
+
+
+// Add / Update Doctor
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
     $action = $_POST["action"] ?? "add";
+
     $fname = trim($_POST["first_name"]);
     $lname = trim($_POST["last_name"]);
     $specialization = trim($_POST["specialization"]);
     $phone = trim($_POST["phone"]);
     $email = trim($_POST["email"]);
 
+
+    // Validation
     if (
         $fname === "" ||
         $lname === "" ||
@@ -60,46 +79,74 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $phone === "" ||
         $email === ""
     ) {
+
         $message = "All fields are required";
+
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
         $message = "Invalid email format";
+
     } else {
+
         $doctorId = 0;
         $image = "";
         $oldImage = "";
 
+
+    
+        // Update
+        
+
         if ($action === "update") {
+
             $doctorId = (int) ($_POST["doctor_id"] ?? 0);
+
             $currentDoctor = $doctorModel->getDoctorById($doctorId);
 
             if (!$currentDoctor) {
+
                 $message = "Doctor not found";
+
             } else {
+
+                // Keep current image
                 $image = $currentDoctor["image"];
                 $oldImage = $currentDoctor["image"];
             }
         }
 
-        if ($message === "" && isset($_FILES["image"]) && $_FILES["image"]["error"] === UPLOAD_ERR_OK) {
-            $allowedExtensions = ["jpg", "jpeg", "png", "webp"];
-            $extension = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
 
-            if (!in_array($extension, $allowedExtensions)) {
-                $message = "Only JPG, JPEG, PNG and WEBP images are allowed";
+        
+        // Image Upload
+        
+
+        if (
+            $message === "" &&
+            isset($_FILES["image"]) &&
+            $_FILES["image"]["error"] === UPLOAD_ERR_OK
+        ) {
+
+            $newImage = $doctorModel->uploadImage($_FILES["image"]);
+
+            if ($newImage === false) {
+
+                $message = "Image upload failed or image type is not allowed";
+
             } else {
-                $image = time() . "_" . basename($_FILES["image"]["name"]);
-                $targetPath = "../uploads/doctors/" . $image;
 
-                if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetPath)) {
-                    $message = "Image upload failed";
-                }
+                $image = $newImage;
             }
-        } elseif ($message === "" && isset($_FILES["image"]) && $_FILES["image"]["error"] !== UPLOAD_ERR_NO_FILE) {
-            $message = "Image upload failed";
         }
 
+
+        
+        // Save to Database
+    
+
         if ($message === "") {
+
             if ($action === "update") {
+
                 if (
                     $doctorModel->updateDoctor(
                         $doctorId,
@@ -111,19 +158,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $image
                     )
                 ) {
-                    if ($oldImage !== "" && $image !== $oldImage) {
-                        $oldImagePath = "../uploads/doctors/" . $oldImage;
 
-                        if (file_exists($oldImagePath)) {
-                            unlink($oldImagePath);
-                        }
+                    // If a new image was uploaded,
+                    // delete the old image
+                    if ($oldImage !== "" && $image !== $oldImage) {
+                        $doctorModel->deleteImage($oldImage);
                     }
 
                     $message = "Doctor updated successfully";
+
                 } else {
+
                     $message = "Failed to update doctor";
                 }
+
             } else {
+
                 if (
                     $doctorModel->addDoctor(
                         $fname,
@@ -134,8 +184,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $image
                     )
                 ) {
+
                     $message = "Doctor added successfully";
+
                 } else {
+
                     $message = "Failed to add doctor";
                 }
             }
@@ -143,9 +196,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
+
+
+// Edit Doctor
+
+
 if (isset($_GET["edit"])) {
-    $editDoctor = $doctorModel->getDoctorById((int) $_GET["edit"]);
+
+    $doctorId = (int) $_GET["edit"];
+
+    $editDoctor = $doctorModel->getDoctorById($doctorId);
 }
+
+
+
+// Get all doctors
+
 
 $doctors = $doctorModel->getAllDoctors();
 
