@@ -993,7 +993,7 @@ td img {
 }
 
 .public-page main.container {
-    padding-top: var(--space-12);
+    padding-top: var(--space-4);
 }
 
 .hero {
