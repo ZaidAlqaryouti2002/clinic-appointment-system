@@ -40,7 +40,7 @@ $nextAppointment = $appointmentModel->getNextPatientAppointment($patientId);
 <?php require "../components/header.php"; ?>
 <main class="container">
 <section class="welcome-section">
-            <div><p class="eyebrow">Patient dashboard</p>
+            <div>
             <h1>Welcome, <?= htmlspecialchars($patientName) ?></h1>
             <p>Here is a quick overview of your appointments.</p></div>
             <a class="button" href="patients-doctors.php">Book Appointment</a>
