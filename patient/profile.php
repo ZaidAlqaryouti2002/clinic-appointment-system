@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-actions">
             <button type="submit">Save Changes</button>
-            <a class="button button-secondary" href="homepage.php">Back to Dashboard</a>
+            <a class="button button-secondary" href="homepage.php">Back to Home</a>
         </div>
     </form>
 </main>
